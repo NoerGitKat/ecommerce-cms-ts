@@ -1,6 +1,6 @@
 "use client";
 
-import { useStoreModal } from "@/hooks";
+import { useStoreModalStore } from "@/hooks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal } from "../ui/modal";
 import { FC } from "react";
@@ -16,22 +16,42 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { toast } from "react-hot-toast";
+import { Store } from "@/types";
 
 const formSchema = z.object({
   name: z.string().min(3),
 });
 
 const StoreModal: FC = (): JSX.Element => {
-  const { isOpen, onClose } = useStoreModal();
+  const { isOpen, onClose } = useStoreModalStore();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+    },
   });
 
   const submit = async (values: z.infer<typeof formSchema>) => {
-    console.log("values are", values);
-    // TODO: Create store in DB
-    onClose();
+    try {
+      const response = await fetch("/api/stores", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: values.name,
+        }),
+      });
+      const res: Store = await response.json();
+
+      toast.success(`Succesfully created store: ${res.name}`);
+      onClose();
+    } catch (error) {
+      console.error("Error on submit!", error);
+      toast.error("Could not submit form. Try again later.");
+    }
   };
 
   return (

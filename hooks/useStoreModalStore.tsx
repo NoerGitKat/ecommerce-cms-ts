@@ -6,10 +6,10 @@ interface StoreModalType {
   onClose: () => void;
 }
 
-const useStoreModal = create<StoreModalType>((set) => ({
+const useStoreModalStore = create<StoreModalType>((set) => ({
   isOpen: true,
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }));
 
-export default useStoreModal;
+export default useStoreModalStore;
