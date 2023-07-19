@@ -3,7 +3,7 @@
 import { useStoreModalStore } from "@/hooks";
 import { useEffect } from "react";
 
-export default function SetupPage() {
+export default function SetupPage(): null {
   const { onOpen, isOpen } = useStoreModalStore();
 
   useEffect(() => {
@@ -13,5 +13,5 @@ export default function SetupPage() {
     }
   }, [isOpen, onOpen]);
 
-  return <main className="p-4">Root Page</main>;
+  return null;
 }

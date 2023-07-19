@@ -44,10 +44,10 @@ const StoreModal: FC = (): JSX.Element => {
           name: values.name,
         }),
       });
-      const res: Store = await response.json();
+      const store: Store = await response.json();
 
-      toast.success(`Succesfully created store: ${res.name}`);
       onClose();
+      window.location.assign(`/${store.id}`);
     } catch (error) {
       console.error("Error on submit!", error);
       toast.error("Could not submit form. Try again later.");
