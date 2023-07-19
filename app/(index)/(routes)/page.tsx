@@ -1,11 +1,10 @@
 "use client";
 
-import { Modal } from "@/components/ui/modal";
 import { useStoreModalStore } from "@/hooks";
 import { useEffect } from "react";
 
 export default function SetupPage() {
-  const { onOpen, isOpen, onClose } = useStoreModalStore();
+  const { onOpen, isOpen } = useStoreModalStore();
 
   useEffect(() => {
     // Note: Can only close modal after store is created
