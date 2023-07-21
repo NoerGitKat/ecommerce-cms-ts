@@ -16,6 +16,8 @@ export default async function DashboardPage({
     },
   });
 
+  if (!store) redirect("/");
+
   return (
     <div>
       Dashboard of store: <b>{store.name}</b>

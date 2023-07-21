@@ -4,14 +4,12 @@ import { StoreModal } from "@/components/modals";
 import { useMount } from "@/hooks";
 import { FC } from "react";
 
-const ModalProvider: FC = ({
-  hasStore,
-}: {
-  hasStore: boolean;
-}): JSX.Element | null => {
+interface ModalProviderProps {}
+
+const ModalProvider: FC<ModalProviderProps> = (): JSX.Element | null => {
   const { isMounted } = useMount();
 
-  if (!isMounted || hasStore) return null;
+  if (!isMounted) return null;
 
   return (
     <>

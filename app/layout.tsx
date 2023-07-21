@@ -17,14 +17,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const store = await prismaDB.store.findMany();
-
   return (
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
           <ToasterProvider />
-          <ModalProvider hasStore={store.length > 0} />
+          <ModalProvider />
           {children}
         </body>
       </html>
