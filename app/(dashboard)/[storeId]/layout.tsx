@@ -22,11 +22,17 @@ export default async function DashboardLayout({
     },
   });
 
+  const stores = await prismaDB.store.findMany({
+    where: {
+      userId,
+    },
+  });
+
   if (!store) redirect("/");
 
   return (
     <>
-      <Navbar />
+      <Navbar stores={stores || []} />
       {children}
     </>
   );

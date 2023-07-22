@@ -5,8 +5,14 @@ import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { FC } from "react";
 import { getRoutes } from "./data";
+import StoreSwitcher from "../store-switcher";
+import { Store } from "@prisma/client";
 
-const Navbar: FC = (): JSX.Element => {
+interface NavbarProps {
+  stores: Store[];
+}
+
+const Navbar: FC<NavbarProps> = ({ stores }): JSX.Element => {
   const pathname = usePathname();
   const params = useParams();
 
@@ -14,7 +20,7 @@ const Navbar: FC = (): JSX.Element => {
 
   return (
     <nav className="border-b flex h-16 items-center px-4">
-      <aside>Store Switcher</aside>
+      <StoreSwitcher stores={stores} />
       <aside className="flex items-center space-x-4 lg:space-x-6 mx-6">
         {routes.map((route) => (
           <Link
