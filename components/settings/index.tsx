@@ -6,10 +6,12 @@ import Header from "../header";
 import { Button } from "../ui/button";
 import { Trash } from "lucide-react";
 import { Separator } from "../ui/separator";
-import SettingsForm from "./Form";
-import { redirect, useParams, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { AlertModal } from "../modals";
+import SettingsForm from "./form";
+import ApiAlert from "../api/Alert";
+import { useOrigin } from "@/hooks";
 
 interface SettingsProps {
   store: Store;
@@ -18,6 +20,7 @@ interface SettingsProps {
 const Settings: FC<SettingsProps> = ({ store }): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const origin = useOrigin();
   const { storeId } = useParams();
   const { refresh, push } = useRouter();
 
@@ -63,6 +66,12 @@ const Settings: FC<SettingsProps> = ({ store }): JSX.Element => {
       </aside>
       <Separator />
       <SettingsForm store={store} />
+      <Separator />
+      <ApiAlert
+        title="API Endpoints"
+        description={`${origin}/api/${storeId}`}
+        variant="public"
+      />
     </section>
   );
 };

@@ -6,7 +6,6 @@ export const getRoutes = (
   label: string;
   active: boolean;
 }[] => {
-  console.log("pathname", pathname);
   return [
     {
       href: `/${params.storeId}/`,

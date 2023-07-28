@@ -56,7 +56,7 @@ function SettingsForm({ store }: SettingsFormProps): JSX.Element {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(updateStore)}
-        className="space-y-4 w-full mt-2"
+        className="space-y-4 w-full my-4"
       >
         <aside className="grid grid-cols-3 gap-8">
           <FormField
