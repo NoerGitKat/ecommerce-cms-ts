@@ -8,7 +8,7 @@ export async function POST(req: Request): Promise<NextResponse<Store>> {
     const { name } = await req.json();
     const { userId } = auth();
 
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
     if (!name) return new NextResponse("Name is required!", { status: 422 });
 
     const newStore = await prismaDB.store.create({
@@ -32,7 +32,7 @@ export async function PATCH(req: Request): Promise<NextResponse<Store>> {
     const { name, storeId } = await req.json();
     const { userId } = auth();
 
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
     if (!name) return new NextResponse("Name is required!", { status: 422 });
     if (!storeId)
       return new NextResponse("Store ID is required!", { status: 422 });
@@ -61,7 +61,7 @@ export async function DELETE(req: Request): Promise<NextResponse<string>> {
     const { storeId } = await req.json();
     const { userId } = auth();
 
-    if (!userId) return new NextResponse("Unauthorized", { status: 401 });
+    if (!userId) return new NextResponse("Unauthenticated", { status: 401 });
     if (!storeId)
       return new NextResponse("Store ID is required!", { status: 422 });
 

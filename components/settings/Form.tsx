@@ -71,7 +71,7 @@ function SettingsForm({ store }: SettingsFormProps): JSX.Element {
                 <FormMessage />
               </FormItem>
             )}
-          ></FormField>
+          />
         </aside>
         <Button
           disabled={form.formState.isSubmitting}
