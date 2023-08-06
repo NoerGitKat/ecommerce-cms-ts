@@ -17,7 +17,6 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { toast } from "react-hot-toast";
 import { ImageUpload } from "../image";
-import { AlertModal } from "../modals";
 
 interface BillboardFormProps {
   storeId: string;
@@ -37,10 +36,10 @@ function BillboardForm({
   billboardId,
   storeId,
 }: BillboardFormProps): JSX.Element {
-  const { refresh } = useRouter();
+  const { refresh, push } = useRouter();
 
   // Copy
-  const toastMessage = billboard ? "Billboard updated:" : "Billboard created:";
+  const toastMessage = billboard ? "Billboard updated." : "Billboard created.";
   const action = billboard ? "Save changes" : "Create";
 
   const form = useForm({
@@ -53,7 +52,7 @@ function BillboardForm({
 
   const onSubmit = async (values: BillboardFormValues) => {
     const data = JSON.stringify({
-      name: values.label,
+      label: values.label,
       imageUrl: values.imageUrl,
     });
     try {
@@ -69,6 +68,7 @@ function BillboardForm({
         });
       }
       refresh();
+      push(`/${storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error) {
       toast.error("Could not create/edit billboard. Remove categories first.");

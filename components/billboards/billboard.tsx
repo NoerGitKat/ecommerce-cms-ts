@@ -1,35 +1,21 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import Header from "../header";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { useParams, useRouter } from "next/navigation";
-import { Billboard } from "@prisma/client";
-import { toast } from "react-hot-toast";
+import { BillboardColumn, columns } from "./columns";
+import { DataTable } from "../ui/data-table";
 
-interface BillBoardProps {}
+interface BillBoardProps {
+  billboards: BillboardColumn[];
+}
 
-const Billboard: FC<BillBoardProps> = (): JSX.Element => {
-  const [billboards, setBillboards] = useState<Billboard[]>([]);
+const BillboardClient: FC<BillBoardProps> = ({ billboards }): JSX.Element => {
   const params = useParams();
   const { push } = useRouter();
-
-  useEffect(() => {
-    async function fetchBillboards() {
-      try {
-        const response = await fetch(`/api/${params.storeId}/billboards`);
-        if (!response.ok) throw new Error("Can't fetch billboards!");
-
-        setBillboards(await response.json());
-        toast.success("Successfully fetched billboards.");
-      } catch (error) {
-        toast.error(error as string);
-      }
-    }
-    fetchBillboards();
-  }, [params.storeId]);
 
   return (
     <>
@@ -44,8 +30,13 @@ const Billboard: FC<BillBoardProps> = (): JSX.Element => {
         </Button>
       </section>
       <Separator />
+      {billboards.length > 0 ? (
+        <DataTable columns={columns} data={billboards} />
+      ) : (
+        <p>There are no billboards yet.</p>
+      )}
     </>
   );
 };
 
-export default Billboard;
+export default BillboardClient;

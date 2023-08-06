@@ -1,7 +1,9 @@
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import prismaDB from "@/lib/prisma";
-import { Billboard } from "@/components/billboards";
+import { BillboardClient } from "@/components/billboards";
+import { BillboardColumn } from "@/components/billboards/columns";
+import { format } from "date-fns";
 
 interface BillboardsPageProps {
   params: {
@@ -25,9 +27,26 @@ async function BillboardsPage({
 
   if (!store) redirect("/");
 
+  const billboards = await prismaDB.billboard.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const formattedBillboards: BillboardColumn[] = billboards.map(
+    ({ id, label, createdAt }) => ({
+      id,
+      label,
+      createdAt: format(createdAt, "MMMM do, yyyy"),
+    }),
+  );
+
   return (
     <main className="space-y-4 p-8 pt-6">
-      <Billboard />
+      <BillboardClient billboards={formattedBillboards} />
     </main>
   );
 }

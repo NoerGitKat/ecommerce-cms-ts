@@ -51,25 +51,27 @@ const ImageUpload: FC<ImageUploadProps> = ({
           );
         })}
       </ul>
-      <CldUploadWidget onUpload={onUpload} uploadPreset="ybkccyvp">
-        {({ open }) => {
-          const handleClick = (event: MouseEvent<HTMLElement>) => {
-            event.preventDefault();
-            open();
-          };
+      {images.length === 0 && (
+        <CldUploadWidget onUpload={onUpload} uploadPreset="ybkccyvp">
+          {({ open }) => {
+            const handleClick = (event: MouseEvent<HTMLElement>) => {
+              event.preventDefault();
+              open();
+            };
 
-          return (
-            <Button
-              type="button"
-              disabled={disabled}
-              variant="secondary"
-              onClick={handleClick}
-            >
-              <ImagePlus className="h-4 w-4 mr-2" />
-            </Button>
-          );
-        }}
-      </CldUploadWidget>
+            return (
+              <Button
+                type="button"
+                disabled={disabled}
+                variant="secondary"
+                onClick={handleClick}
+              >
+                <ImagePlus className="h-4 w-4 mr-2" />
+              </Button>
+            );
+          }}
+        </CldUploadWidget>
+      )}
     </aside>
   );
 };
